@@ -1,3 +1,36 @@
+**DISCLAIMER:**
+ 
+This project is a fork of https://github.com/nokia/kong-oidc that has been updated with a bumped version of [zmartzone/lua-resty-openidc](https://github.com/zmartzone/lua-resty-openidc)
+
+As discussed in https://github.com/Kong/kong/issues/5549#issuecomment-593072051, kong has an issue, which was temporary fixed in **lua-resty-openssl** (0.5.3).
+Current kong rockspec doesn't contain the [fixed version](https://github.com/Kong/kong/commit/14a5533a840c0eb2d4d16726779f0fba3143b325#diff-c537691e99ae0c68dde4e01514a86497) of **lua-resty-openssl** (remains 0.4.3).
+
+As @fffonion [commented](https://github.com/Kong/kong/issues/5549#issuecomment-618804414), the correct [fix](https://github.com/jkeys089/lua-resty-hmac/commit/3c701cd8ead86952e623a49ef29c8d77f102e779) is in the lua-resty-hmac library
+
+The current version of **kong-oidc** plugin contain "lua-resty-openidc ~> 1.7.2-1" dependency.
+
+The dependency tree:
+```
+kong-oidc
+|-lua-resty-openidc 1.7.2-1 depends on lua-resty-jwt
+|--lua-resty-jwt/third-party/ 
+|--- lua-resty-hmac
+```
+
+The luarocks list:
+```
+lua-resty-jwt
+   0.2.2-0 (installed) - /usr/local/lib/luarocks/rocks-5.1
+
+lua-resty-openidc
+   1.7.2-1 (installed) - /usr/local/lib/luarocks/rocks-5.1
+
+lua-resty-openssl
+   0.4.3-1 (installed) - /usr/local/lib/luarocks/rocks-5.1
+```
+
+
+---
 # What is Kong OIDC plugin
 
 [![Join the chat at https://gitter.im/nokia/kong-oidc](https://badges.gitter.im/nokia/kong-oidc.svg)](https://gitter.im/nokia/kong-oidc?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
