@@ -4,6 +4,23 @@
 .\#*
 lua_install
 luacov.stats.out
-
-
 .idea
+venv/
+bin/venv/
+**/__pycache__/
+# Visual Studio Code
+.vscode/
+
+# IntelliJ IDEA
+*.iml
+.project
+.project
+.project
+.project
+.project
+.project
+.project
+.project
+.project
+.project
+.project
