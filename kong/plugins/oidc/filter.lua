@@ -21,7 +21,7 @@ local function shouldIgnoreRequest(patterns)
       else
       	if (objProp[2]) then
       		isMatching = string.find(ngx.var.uri, objProp[2]) ~= nil
-      	else
+      	end
       end
       if (isMatching) then return true end
     end
