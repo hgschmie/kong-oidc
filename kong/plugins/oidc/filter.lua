@@ -37,11 +37,12 @@ local function shouldIgnoreRequest(patterns)
   return false
 end
 
-local function patternMatch(source, pattern){
+local function patternMatch(source, pattern)
 	local val= string.find(source, pattern) 
 	if (val) then return true end
 	return string.find(source, pattern, 1, true) ~= nil
-}
+end
+
 function M.shouldProcessRequest(config)
   return not shouldIgnoreRequest(config.filters)
 end
