@@ -96,7 +96,7 @@ function M.injectIDToken(idToken, headerName)
 end
 
 function M.injectAdditionalHeaders(user, headerNames)
-  ngx.log(ngx.DEBUG, "Injecting profile headers " .. headerNames)
+  ngx.log(ngx.DEBUG, "Injecting profile headers " .. cjson.encode(headerNames))
   for _, header in pairs(headerNames) do
   	if (user[header]) then 
   		ngx.req.set_header(header, user[header])
