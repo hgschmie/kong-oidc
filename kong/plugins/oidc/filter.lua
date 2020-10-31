@@ -10,7 +10,7 @@ local function shouldIgnoreRequest(patterns)
 	    objProp[idx] = value
 	    idx = idx + 1
 	  end
-	  ngx.log(ngx.DEBUG, "OidcHandler handling request, path: " .. ngx.var.request_uri .. " host " .. ngx.var.host .. " pattern " ..  objProp)
+	  ngx.log(ngx.DEBUG, "OidcHandler handling request, path: " .. ngx.var.request_uri .. " host " .. ngx.var.host .. " pattern " ..  objProp[1] .. " : " .. objProp[2])
       local isMatching = false
       if (objProp[1]) then
       	if (objProp[2]) then
