@@ -6,11 +6,11 @@ local function shouldIgnoreRequest(patterns)
    local idx = 1
     for _, pattern in pairs(patterns) do
       idx = 1
-      ngx.log(ngx.DEBUG, "OidcHandler handling request, path: " .. ngx.var.request_uri .. " host " .. ngx.var.host )
       for value in string.gmatch(pattern, "[^:]+") do 
 	    objProp[idx] = value
 	    idx = idx + 1
 	  end
+	  ngx.log(ngx.DEBUG, "OidcHandler handling request, path: " .. ngx.var.request_uri .. " host " .. ngx.var.host .. " pattern " ..  objProp)
       local isMatching = false
       if (objProp[1]) then
       	if (objProp[2]) then
