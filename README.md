@@ -25,10 +25,41 @@ lua-resty-jwt
 lua-resty-openidc
    1.7.2-1 (installed) - /usr/local/lib/luarocks/rocks-5.1
 
-lua-resty-openssl
-   0.4.3-1 (installed) - /usr/local/lib/luarocks/rocks-5.1
 ```
 
+```shell
+FROM kong:2.1.4-alpine
+
+LABEL description="Alpine + Kong 2.1.4 + kong-oidc plugin"
+
+ENV OIDC_PLUGIN_VERSION=1.1.0-1
+ENV JWT_PLUGIN_VERSION=1.1.0-1
+
+USER root
+RUN apk update && apk add git unzip luarocks
+#RUN luarocks install kong-oidc
+RUN luarocks install lua-resty-jwt 0.2.2-0
+RUN luarocks install lua-resty-openidc 1.7.2-1
+
+
+#RUN git clone https://github.com/PSheshenya/kong-oidc.git \
+RUN git clone https://github.com/saroha87/kong-oidc.git \
+    && cd kong-oidc \
+    && luarocks make
+
+RUN luarocks pack kong-oidc ${OIDC_PLUGIN_VERSION} \
+     && luarocks install kong-oidc-${OIDC_PLUGIN_VERSION}.all.rock
+
+#RUN git clone --branch 20200505-access-token-processing https://github.com/BGaunitz/kong-plugin-jwt-keycloak.git \
+RUN git clone --branch master https://github.com/saroha87/kong-plugin-jwt-keycloak.git \
+    && cd kong-plugin-jwt-keycloak \
+    && luarocks make
+
+RUN luarocks pack kong-plugin-jwt-keycloak ${JWT_PLUGIN_VERSION} \
+     && luarocks install kong-plugin-jwt-keycloak-${JWT_PLUGIN_VERSION}.all.rock
+
+USER kong
+```
 
 ---
 # What is Kong OIDC plugin
