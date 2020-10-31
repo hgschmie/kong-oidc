@@ -2,10 +2,21 @@ local M = {}
 
 local function shouldIgnoreRequest(patterns)
   if (patterns) then
-    for _, pattern in ipairs(patterns) do
-      ngx.log(ngx.DEBUG, "OidcHandler handling request, path: " .. ngx.var.request_uri)
-      ngx.log(ngx.DEBUG, "OidcHandler handling request, path ur: " .. ngx.var.uri)
-      local isMatching = not (string.find(ngx.var.uri, pattern) == nil)
+   local objProp = { }
+   local idx = 1
+    for _, pattern in pairs(patterns) do
+      idx = 1
+      ngx.log(ngx.DEBUG, "OidcHandler handling request, path: " .. ngx.var.request_uri .. " host " .. ngx.var.host .. " httphost " .. ngx.var.http_host )
+      for value in string.gmatch(pattern, "[^:]+") do 
+	    objProp[index] = value
+	    idx = idx + 1
+	  end
+      local isMatching = false
+      if (objProp[1]) then
+      	isMatching = (string.find(ngx.var.uri, objProp[2]) ~= nil and ngx.var.host ~= objProp[1])
+      else
+      	isMatching = string.find(ngx.var.uri, objProp[2]) ~= nil
+      end
       if (isMatching) then return true end
     end
   end
