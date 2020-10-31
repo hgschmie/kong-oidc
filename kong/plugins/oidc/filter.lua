@@ -23,7 +23,7 @@ local function shouldIgnoreRequest(patterns)
       else
       	if (objProp[2]) then      		
       		ngx.log(ngx.DEBUG, "OidcHandler handling request, pattern  : " .. objProp[2])
-      		isMatching = string.find(ngx.var.uri, objProp[2]) ~= nil
+      		isMatching = (string.find(ngx.var.uri, objProp[2]) ~= nil)
       	end
       end
       if (isMatching) then return true end
