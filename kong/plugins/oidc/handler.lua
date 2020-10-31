@@ -19,7 +19,7 @@ function OidcHandler:access(config)
     session.configure(config)
     handle(oidcConfig)
   else
-    ngx.log(ngx.DEBUG, "OidcHandler ignoring request, path: " .. ngx.var.request_uri)
+    ngx.log(ngx.DEBUG, "OidcHandler ignoring request, host: " .. ngx.var.host .. " path: " .. ngx.var.request_uri)
   end
 
   ngx.log(ngx.DEBUG, "OidcHandler done")
