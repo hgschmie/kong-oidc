@@ -32,6 +32,7 @@ return {
 			{ disable_userinfo_header = { type = "string", required = false, default = "no" }, },
 			{ disable_id_token_header = { type = "string", required = false, default = "no" }, },
 			{ disable_access_token_header = { type = "string", required = false, default = "no" }, },
+			{ add_header_user_profile = { type = "set", elements = { type = "string" }, required = false }, }
 			{ revoke_tokens_on_logout = { type = "string", required = false, default = "no" } },
         },
       },

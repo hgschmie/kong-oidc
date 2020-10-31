@@ -69,7 +69,8 @@ function M.get_options(config, ngx)
     access_token_as_bearer = config.access_token_as_bearer == "yes",
     disable_userinfo_header = config.disable_userinfo_header == "yes",
     disable_id_token_header = config.disable_id_token_header == "yes",
-    disable_access_token_header = config.disable_access_token_header == "yes"
+    disable_access_token_header = config.disable_access_token_header == "yes",
+    extra_headers = config.add_header_user_profile
   }
 end
 
@@ -92,6 +93,15 @@ function M.injectIDToken(idToken, headerName)
   ngx.log(ngx.DEBUG, "Injecting " .. headerName)
   local tokenStr = cjson.encode(idToken)
   ngx.req.set_header(headerName, ngx.encode_base64(tokenStr))
+end
+
+function M.injectAdditionalHeaders(user, headerNames)
+  ngx.log(ngx.DEBUG, "Injecting profile headers " .. headerNames)
+  for _, header in pairs(headerNames) do
+  	if (user[header]) then 
+  		ngx.req.set_header(header, user[header])
+  	end
+  end
 end
 
 function M.injectUser(user, headerName)
