@@ -1,5 +1,11 @@
 local M = {}
 
+local function patternMatch(source, pattern)
+	local val= string.find(source, pattern) 
+	if (val) then return true end
+	return string.find(source, pattern, 1, true) ~= nil
+end
+
 local function shouldIgnoreRequest(patterns)
   if (patterns) then
    local objProp = { }
@@ -23,7 +29,7 @@ local function shouldIgnoreRequest(patterns)
       else
       	if (objProp[2] and objProp[2] ~= '*') then      		
       		-- ngx.log(ngx.DEBUG, "[bogus]  OidcHandler handling request, pattern  : " .. objProp[2])
-      		isMatching = (patternMatch(ngx.var.uri, objProp[2]))
+      		isMatching = patternMatch(ngx.var.uri, objProp[2])
       	else 
       		if (objProp[1] == '*' and objProp[2] == '*') then
       			ngx.log(ngx.WARN, "OidcHandler handling request, both * means all should be ignore, better to disble plugin then using this")
@@ -37,11 +43,6 @@ local function shouldIgnoreRequest(patterns)
   return false
 end
 
-local function patternMatch(source, pattern)
-	local val= string.find(source, pattern) 
-	if (val) then return true end
-	return string.find(source, pattern, 1, true) ~= nil
-end
 
 function M.shouldProcessRequest(config)
   return not shouldIgnoreRequest(config.filters)
